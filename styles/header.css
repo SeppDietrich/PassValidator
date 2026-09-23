@@ -1,0 +1,17 @@
+/*Header Styles*/
+header{
+    padding: 0;
+    margin: 0;
+    border: 1px solid black;
+}
+header :hover{
+    transition: 1s;
+    background-color: #a6a1a1;
+}
+.list-header{
+    display: flex;
+    justify-content: space-between;
+}
+.nav-item{
+    padding: 5px;
+}
