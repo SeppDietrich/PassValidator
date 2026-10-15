@@ -1,8 +1,10 @@
 <?php
 session_start();
+require_once("config.php");
+
 $denumireProiect      = "Sistem de Gestionare și Validare a Abonamentului";
-$autor                = "Iurcu Nicolae";
-$grupa                = "AAW-231";
+
+
 $descriereProiect      = "Aplicație pentru gestionarea abonamentelor utilizatorilor: " .
         "validarea perioadei de acces, calculul zilelor rămase până la " .
         "expirare și monitorizarea ultimei utilizări.";
@@ -10,8 +12,6 @@ $utilizatoriPrincipali = ["Administratori de sistem", "Utilizatori abonați", "O
 $entitatiPlanificate   = ["Abonament", "Utilizator", "Plată", "Rol de acces"];
 
 
-//Variabile Constante
-define('VERSIUNE_APLICATIE', '1.0.0');
 
 //Definirea Clasei:
 
@@ -124,25 +124,15 @@ function previousImage(){
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($denumireProiect); ?></title>
-    <link href="styles/style.css" rel="stylesheet">
-    <link href="styles/header.css" rel="stylesheet">
-    <link href="styles/content-body.css" rel="stylesheet">
-    <link href="styles/carousel.css" rel="stylesheet">
+    <?php require_once("components/styleslink.php"); ?>
 
 </head>
 <body>
 <style>
 </style>
-<header>
-        <div class="list-header">
-            <div class="dropdown-button nav-item">
-                Button
-            </div>
-            <div class="login-button nav-item">
-                loggin
-            </div>
-        </div>
-</header>
+<!--Navbar-->
+    <?php require_once("components/navbar.php"); ?>
+
 <!--Carousel-->
 <div class="carousel-container">
     <?php
@@ -167,8 +157,8 @@ function previousImage(){
 
     <h2>Detalii proiect</h2>
     <ul>
-        <li><strong>Autor:</strong> <?php echo htmlspecialchars($autor); ?></li>
-        <li><strong>Grupa:</strong> <?php echo htmlspecialchars($grupa); ?></li>
+        <li><strong>Autor:</strong> <?php echo htmlspecialchars(AUTOR); ?></li>
+        <li><strong>Grupa:</strong> <?php echo htmlspecialchars(GRUPA); ?></li>
         <li><strong>Descriere:</strong> <?php echo htmlspecialchars($descriereProiect); ?></li>
         <li><strong>Utilizatori principali:</strong> <?php echo htmlspecialchars(implode(', ', $utilizatoriPrincipali)); ?></li>
         <li><strong>Entități planificate:</strong> <?php echo htmlspecialchars(implode(', ', $entitatiPlanificate)); ?></li>
@@ -210,11 +200,10 @@ function previousImage(){
         <?php endforeach; ?>
     </table>
 
-    <footer>
-        Versiune aplicație: <?php echo VERSIUNE_APLICATIE; ?> &nbsp;|&nbsp;
-        Autor: <?php echo htmlspecialchars($autor); ?>
-    </footer>
+
 
 </div>
+<!--    FOOTER-->
+<?php require_once("components/footer.php"); ?>
 </body>
 </html>
