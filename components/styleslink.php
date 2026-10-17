@@ -7,3 +7,4 @@
 <link href="styles/content-body.css" rel="stylesheet">
 <link href="styles/carousel.css" rel="stylesheet">
 <link href="styles/footer.css" rel="stylesheet">
+<link href="styles/pages.css" rel="stylesheet">
