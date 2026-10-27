@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once("config.php");
 $date = require("data/abonamente.php");
 

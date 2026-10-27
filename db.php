@@ -1,7 +1,7 @@
 <?php
 // Setări pentru conexiunea la baza de date.
 // Pași la conectare: 1) completează datele de mai jos, 2) schimbă DB_ENABLED în true.
-define('DB_ENABLED', false);
+define('DB_ENABLED', true);
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'transabon');
 define('DB_USER', 'root');

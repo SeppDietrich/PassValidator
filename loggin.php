@@ -1,7 +1,14 @@
 <?php
-session_start();
 require_once("config.php");
+require_once("includes/guard.php");
+require_once("includes/csrf.php");
 require_once("includes/auth.php");
+
+// Utilizatorul deja autentificat merge direct la pagina rolului.
+if (!empty($_SESSION['user_id'])) {
+    header("Location: " . pagina_rol($_SESSION['user_rol']));
+    exit;
+}
 
 $eroare = '';
 $email  = '';
@@ -10,15 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email  = trim($_POST['email'] ?? '');
     $parola = $_POST['password'] ?? '';
 
-    if ($email === '' || $parola === '') {
+    if (!csrf_valid()) {
+        $eroare = 'Sesiunea formularului a expirat. Încearcă din nou.';
+    } elseif ($email === '' || $parola === '') {
         $eroare = 'Completează e-mailul și parola.';
     } else {
         $rezultat = autentificaUtilizator($email, $parola);
         if ($rezultat['ok']) {
-            session_regenerate_id(true);
-            $_SESSION['user_id']   = $rezultat['user']['id'];
-            $_SESSION['user_rol']  = $rezultat['user']['rol'];
-            header("Location: index.php");
+            autentificaSesiune($rezultat['user']);
+            header("Location: " . pagina_rol($rezultat['user']['rol']));
             exit;
         }
         $eroare = $rezultat['eroare'];
@@ -45,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form action="loggin.php" method="POST">
+        <?php echo csrf_camp(); ?>
         <div class="form-group">
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
@@ -57,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <button type="submit">Autentificare</button>
     </form>
+
+    <p class="form-link">Nu ai cont? <a href="inregistrare.php">Creează cont</a></p>
 </div>
 
 <?php require_once("components/footer.php"); ?>
